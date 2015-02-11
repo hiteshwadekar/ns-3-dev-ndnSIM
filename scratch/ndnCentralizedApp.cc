@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 	CommandLine cmd;
 	cmd.Parse(argc, argv);
 
-	cout << "ndnCentralizedController: Starting application" << endl;
+	cout << "ndnCentralizedController: Starting application: -> " << endl;
 
 	char cCurrentPath[FILENAME_MAX];
 	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath))) {
