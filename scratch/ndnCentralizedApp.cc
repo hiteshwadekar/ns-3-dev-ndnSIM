@@ -31,8 +31,9 @@ int main(int argc, char *argv[]) {
 	topologyReader.SetFileName(
 			"src/ndnSIM/examples/topologies/topo-centralized-controller.txt");
 	topologyReader.Read();
-	std::cout << "Link information" << std::endl;
 
+	/*
+	std::cout << "Link information" << std::endl;
 	std::list<TopologyReader::Link> links = topologyReader.GetLinks();
 	std::list<TopologyReader::Link>::const_iterator iterator;
 
@@ -41,7 +42,7 @@ int main(int argc, char *argv[]) {
 	    std::cout << "Link to  ->  " << iterator->GetToNodeName()<<std::endl;
 	    std::cout << "Link OSPF attribute -> " << iterator->GetAttribute("OSPF");
 	}
-
+*/
 	// Install NDN stack on all nodes
 	ndn::StackHelper ndnHelper;
 	//ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::BestRoute");
@@ -69,9 +70,9 @@ int main(int argc, char *argv[]) {
 	std::string prfx_controller_node_consumer3 = "/Node3";
 
 	ndn::AppHelper consumerHelper("ns3::ndn::CustConsumer");
+
 	consumerHelper.SetAttribute("PayloadSize", StringValue("2048"));
 	consumerHelper.SetAttribute("Frequency", StringValue("1")); // 10 interests a s	econd
-
 
 	consumerHelper.SetPrefix(prfx_controller_node_consumer1);
 	ApplicationContainer app1 = consumerHelper.Install(consumer1);
@@ -84,7 +85,7 @@ int main(int argc, char *argv[]) {
 
 
 	ndn::AppHelper controllerHelper("ns3::ndn::ControllerApp");
-	controllerHelper.SetAttribute("Frequency", StringValue("1")); // 10 interests a second
+	controllerHelper.SetAttribute("Frequency", StringValue("1")); // 10 interests a second,
 	controllerHelper.SetAttribute("PayloadSize", StringValue("2048"));
 	controllerHelper.SetPrefix(prfx_controller);
 	controllerHelper.Install(controlllerNode);
@@ -102,10 +103,10 @@ int main(int argc, char *argv[]) {
 	ndn::FibHelper::AddRoute("Node0", prfx_controller_node_consumer2, "Node2", 0);
 
 	app1.Start(Seconds (15.0));
-	app2.Start(Seconds (25.0));
-	app3.Start(Seconds (35.0));
+	app2.Start(Seconds (45.0));
+	app3.Start(Seconds (75.0));
 
-	Simulator::Stop(Seconds(100.0));
+	Simulator::Stop(Seconds(200.0));
 
 	Simulator::Run();
 	Simulator::Destroy();
