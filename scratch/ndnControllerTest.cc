@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	Ptr<Node> consumer6 = Names::Find<Node>("Node6");
 
 
-	Ptr<Node> controlllerNode = Names::Find<Node>("Node3");
+	Ptr<Node> controlllerNode = Names::Find<Node>("controller");
 
 	// Install NDN applications
 	std::string prfx_node_controller_consumer1 = "/controller/Node1";
@@ -81,12 +81,12 @@ int main(int argc, char *argv[]) {
 	controllerHelper.SetPrefix(prfx_controller);
 	controllerHelper.Install(controlllerNode);
 
-	ndn::FibHelper::AddRoute("Node1", prfx_controller, "Node3", 0);
-	ndn::FibHelper::AddRoute("Node1", prfx_controller_node_consumer2, "Node3", 0);
-	ndn::FibHelper::AddRoute("Node4", prfx_controller, "Node3", 0);
-	ndn::FibHelper::AddRoute("Node4", prfx_controller_node_consumer2, "Node3", 0);
-	ndn::FibHelper::AddRoute("Node5", prfx_controller, "Node3", 0);
-	ndn::FibHelper::AddRoute("Node6", prfx_controller, "Node3", 0);
+	ndn::FibHelper::AddRoute("Node1", prfx_controller, "controller", 0);
+	ndn::FibHelper::AddRoute("Node1", prfx_controller_node_consumer2, "controller", 0);
+	ndn::FibHelper::AddRoute("Node4", prfx_controller, "controller", 0);
+	ndn::FibHelper::AddRoute("Node4", prfx_controller_node_consumer2, "controller", 0);
+	ndn::FibHelper::AddRoute("Node5", prfx_controller, "controller", 0);
+	ndn::FibHelper::AddRoute("Node6", prfx_controller, "controller", 0);
 
 	ndn::FibHelper::AddRoute("Node2", prfx_controller, "Node1", 0);
 	ndn::FibHelper::AddRoute("Node2", prfx_controller, "Node4", 0);
@@ -95,12 +95,12 @@ int main(int argc, char *argv[]) {
 	ndn::FibHelper::AddRoute("Node4", prfx_controller_node_consumer2, "Node2", 0);
 
 
-	ndn::FibHelper::AddRoute("Node3", prfx_controller_node_consumer1, "Node1", 0);
-	ndn::FibHelper::AddRoute("Node3", prfx_controller_node_consumer2, "Node1", 0);
-	ndn::FibHelper::AddRoute("Node3", prfx_controller_node_consumer2, "Node4", 0);
-	ndn::FibHelper::AddRoute("Node3", prfx_controller_node_consumer4, "Node4", 0);
-	ndn::FibHelper::AddRoute("Node3", prfx_controller_node_consumer5, "Node5", 0);
-	ndn::FibHelper::AddRoute("Node3", prfx_controller_node_consumer6, "Node6", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer1, "Node1", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer2, "Node1", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer2, "Node4", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer4, "Node4", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer5, "Node5", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer6, "Node6", 0);
 
 	app1.Start(Seconds (15.0));
 	app2.Start(Seconds (45.0));

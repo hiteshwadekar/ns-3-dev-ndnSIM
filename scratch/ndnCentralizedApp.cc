@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 	Ptr<Node> consumer2 = Names::Find<Node>("Node2");
 	Ptr<Node> consumer3 = Names::Find<Node>("Node3");
 
-	Ptr<Node> controlllerNode = Names::Find<Node>("Node1");
+	Ptr<Node> controlllerNode = Names::Find<Node>("controller");
 
 	// Install NDN applications
 	std::string prfx_node_controller_consumer1 = "/controller/Node0";
@@ -93,11 +93,11 @@ int main(int argc, char *argv[]) {
 	// Communication other node to controller through Node0
 	ndn::FibHelper::AddRoute("Node2", prfx_controller, "Node0", 0);
 	ndn::FibHelper::AddRoute("Node3", prfx_controller, "Node0", 0);
-	ndn::FibHelper::AddRoute("Node0", prfx_controller, "Node1", 0);
+	ndn::FibHelper::AddRoute("Node0", prfx_controller, "controller", 0);
 
-	ndn::FibHelper::AddRoute("Node1", prfx_controller_node_consumer1, "Node0", 0);
-	ndn::FibHelper::AddRoute("Node1", prfx_controller_node_consumer2, "Node0", 0);
-	ndn::FibHelper::AddRoute("Node1", prfx_controller_node_consumer3, "Node0", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer1, "Node0", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer2, "Node0", 0);
+	ndn::FibHelper::AddRoute("controller", prfx_controller_node_consumer3, "Node0", 0);
 
 	ndn::FibHelper::AddRoute("Node0", prfx_controller_node_consumer3, "Node3", 0);
 	ndn::FibHelper::AddRoute("Node0", prfx_controller_node_consumer2, "Node2", 0);
