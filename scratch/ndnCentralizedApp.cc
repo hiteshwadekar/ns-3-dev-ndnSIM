@@ -103,8 +103,8 @@ int main(int argc, char *argv[]) {
 	ndn::FibHelper::AddRoute("Node0", prfx_controller_node_consumer2, "Node2", 0);
 
 	app1.Start(Seconds (15.0));
-	app2.Start(Seconds (45.0));
-	app3.Start(Seconds (75.0));
+	app2.Start(Seconds (15.0));
+	app3.Start(Seconds (15.0));
 
 	Simulator::Stop(Seconds(200.0));
 
