@@ -4,6 +4,7 @@
 
 #include <set>
 #include <unistd.h>
+#include "ns3/ndnSIM/helper/ndn-link-control-helper.hpp"
 
 #define GetCurrentDir getcwd
 
@@ -106,8 +107,11 @@ int main(int argc, char *argv[]) {
 	app2.Start(Seconds (15.0));
 	app3.Start(Seconds (15.0));
 
-	Simulator::Stop(Seconds(200.0));
+	Simulator::Schedule(Seconds(20.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
+	//Simulator::Schedule(Seconds(50.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
+	Simulator::Stop(Seconds(12000.0));
 
+	ndn::L3RateTracer::InstallAll("rate-trace.txt", Seconds(0.5));
 	Simulator::Run();
 	Simulator::Destroy();
 	cout << "\n ndnCentralizedController: Stopping application" << endl;
