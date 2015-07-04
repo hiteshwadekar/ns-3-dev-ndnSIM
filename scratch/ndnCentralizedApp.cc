@@ -103,12 +103,12 @@ int main(int argc, char *argv[]) {
 	ndn::FibHelper::AddRoute("Node0", prfx_controller_node_consumer3, "Node3", 0);
 	ndn::FibHelper::AddRoute("Node0", prfx_controller_node_consumer2, "Node2", 0);
 
-	app1.Start(Seconds (45.0));
-	app2.Start(Seconds (45.0));
-	app3.Start(Seconds (45.0));
+	app1.Start(Seconds (15.0));
+	app2.Start(Seconds (15.0));
+	app3.Start(Seconds (15.0));
 
-	//Simulator::Schedule(Seconds(20.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
-	//Simulator::Schedule(Seconds(70.0), ndn::LinkControlHelper::FailLink, consumer3, consumer2);
+	//Simulator::Schedule(Seconds(25.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
+	Simulator::Schedule(Seconds(18.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
 	//Simulator::Schedule(Seconds(50.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
 	Simulator::Stop(Seconds(1600.0));
 
