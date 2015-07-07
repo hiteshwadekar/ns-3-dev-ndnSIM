@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
 	ndn::AppHelper consumerHelper("ns3::ndn::CustConsumer");
 
 	consumerHelper.SetAttribute("PayloadSize", StringValue("2048"));
-	consumerHelper.SetAttribute("Frequency", StringValue("1")); // 10 interests a s	econd
+	consumerHelper.SetAttribute("Frequency", StringValue("100")); // 10 interests a s	econd
 
 	consumerHelper.SetPrefix(prfx_controller_node_consumer1);
 	ApplicationContainer app1 = consumerHelper.Install(consumer1);
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 
 
 	ndn::AppHelper controllerHelper("ns3::ndn::ControllerApp");
-	controllerHelper.SetAttribute("Frequency", StringValue("1")); // 10 interests a second,
+	controllerHelper.SetAttribute("Frequency", StringValue("100")); // 10 interests a second,
 	controllerHelper.SetAttribute("PayloadSize", StringValue("2048"));
 	controllerHelper.SetPrefix(prfx_controller);
 	controllerHelper.Install(controlllerNode);
@@ -103,16 +103,19 @@ int main(int argc, char *argv[]) {
 	ndn::FibHelper::AddRoute("Node0", prfx_controller_node_consumer3, "Node3", 0);
 	ndn::FibHelper::AddRoute("Node0", prfx_controller_node_consumer2, "Node2", 0);
 
-	app1.Start(Seconds (15.0));
-	app2.Start(Seconds (15.0));
-	app3.Start(Seconds (15.0));
+	//app1.Start(Seconds (15.0));
+	//app2.Start(Seconds (15.0));
+	//app3.Start(Seconds (15.0));
 
 	//Simulator::Schedule(Seconds(25.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
-	Simulator::Schedule(Seconds(18.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
+	//Simulator::Schedule(Seconds(18.0), ndn::LinkControlHelper::FailLink, consumer3, consumer2);
 	//Simulator::Schedule(Seconds(50.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
-	Simulator::Stop(Seconds(1600.0));
+	Simulator::Stop(Seconds(200.0));
 
-	ndn::L3RateTracer::InstallAll("rate-trace.txt", Seconds(0.5));
+	ndn::L3RateTracer::InstallAll("rate-trace.txt", Seconds(1.0));
+	ndn::AppDelayTracer::InstallAll("app-delays-trace.txt");
+	ndn::CsTracer::InstallAll("cs-trace.txt", Seconds(1.0));
+
 	Simulator::Run();
 	Simulator::Destroy();
 	cout << "\n ndnCentralizedController: Stopping application" << endl;
