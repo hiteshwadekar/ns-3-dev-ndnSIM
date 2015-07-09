@@ -132,9 +132,10 @@ int main(int argc, char *argv[]) {
 
 	Simulator::Stop(Seconds(500.0));
 
-	Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
+	//Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
 	//Simulator::Schedule(Seconds(18.0), ndn::LinkControlHelper::FailLink, consumer3, consumer2);
 	//Simulator::Schedule(Seconds(50.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
+	//Simulator::Schedule(Seconds(80.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
 
 	ndn::L3RateTracer::InstallAll("rate-trace.txt", Seconds(1.0));
 	//ndn::AppDelayTracer::InstallAll("app-delays-trace.txt");
