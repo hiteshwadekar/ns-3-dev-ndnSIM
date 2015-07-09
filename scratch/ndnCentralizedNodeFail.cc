@@ -44,6 +44,8 @@ int main(int argc, char *argv[]) {
 	    std::cout << "Link OSPF attribute -> " << iterator->GetAttribute("OSPF");
 	}
 */
+
+
 	// Install NDN stack on all nodes
 	ndn::StackHelper ndnHelper;
 	//ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::BestRoute");
@@ -51,7 +53,10 @@ int main(int argc, char *argv[]) {
 	ndnHelper.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "1");
 	ndnHelper.InstallAll();
 	topologyReader.ApplyOspfMetric();
-
+	ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/best-route");
+	//ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/broadcast");
+	//ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/ClientControlStrategy");
+	//ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/BestRouteStrategy2");
 	// Getting containers for the consumer/producer
 	Ptr<Node> consumer1 = Names::Find<Node>("Node1");
 	Ptr<Node> consumer2 = Names::Find<Node>("Node2");
@@ -127,7 +132,7 @@ int main(int argc, char *argv[]) {
 
 	Simulator::Stop(Seconds(500.0));
 
-	//Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
+	Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
 	//Simulator::Schedule(Seconds(18.0), ndn::LinkControlHelper::FailLink, consumer3, consumer2);
 	//Simulator::Schedule(Seconds(50.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
 
