@@ -75,9 +75,14 @@ int main(int argc, char *argv[]) {
 	std::string prfx_controller_node_producer = "/Producer";
 
 	ndn::AppHelper consumerHelper("ns3::ndn::CustConsumer");
+	ndn::AppHelper consumerHelper1("ns3::ndn::ConsumerChange");
 
 	consumerHelper.SetAttribute("PayloadSize", StringValue("3048"));
 	consumerHelper.SetAttribute("Frequency", StringValue("1")); // 10 interests a s	econd
+
+	consumerHelper1.SetAttribute("PayloadSize", StringValue("3048"));
+	consumerHelper1.SetAttribute("Frequency", StringValue("1")); // 10 interests a s	econd
+
 
 	consumerHelper.SetPrefix(prfx_controller_node_consumer1);
 	ApplicationContainer app1 = consumerHelper.Install(consumer1);
@@ -88,12 +93,11 @@ int main(int argc, char *argv[]) {
 	consumerHelper.SetPrefix(prfx_controller_node_consumer3);
 	ApplicationContainer app3 =consumerHelper.Install(consumer3);
 
-	consumerHelper.SetPrefix(prfx_controller_node_consumer);
-	ApplicationContainer app4 =consumerHelper.Install(consumer);
+	consumerHelper1.SetPrefix(prfx_controller_node_consumer);
+	ApplicationContainer app4 =consumerHelper1.Install(consumer);
 
 	consumerHelper.SetPrefix(prfx_controller_node_producer);
 	ApplicationContainer app5 =consumerHelper.Install(producer);
-
 
 	ndn::AppHelper controllerHelper("ns3::ndn::ControllerApp");
 	controllerHelper.SetAttribute("Frequency", StringValue("1")); // 10 interests a second,
@@ -135,7 +139,7 @@ int main(int argc, char *argv[]) {
 	//Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
 	//Simulator::Schedule(Seconds(18.0), ndn::LinkControlHelper::FailLink, consumer3, consumer2);
 	//Simulator::Schedule(Seconds(50.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
-	//Simulator::Schedule(Seconds(80.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
+	//Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLinkByName, "Node2", "Node3");
 
 	ndn::L3RateTracer::InstallAll("rate-trace.txt", Seconds(1.0));
 	//ndn::AppDelayTracer::InstallAll("app-delays-trace.txt");
