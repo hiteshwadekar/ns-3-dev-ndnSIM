@@ -1,6 +1,8 @@
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
 #include "ns3/ndnSIM-module.h"
+#include "ns3/names.h"
+#include "ns3/ndnSIM/model/ndn-common.hpp"
 
 #include <set>
 #include <unistd.h>
@@ -54,6 +56,7 @@ int main(int argc, char *argv[]) {
 	ndnHelper.InstallAll();
 	topologyReader.ApplyOspfMetric();
 	ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/best-route");
+	ndn::StrategyChoiceHelper::InstallAll("/controller", "/localhost/nfd/strategy/broadcast");
 	//ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/broadcast");
 	//ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/ClientControlStrategy");
 	//ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/BestRouteStrategy2");
@@ -65,8 +68,10 @@ int main(int argc, char *argv[]) {
 	Ptr<Node> producer = Names::Find<Node>("Producer");
 	Ptr<Node> controlllerNode = Names::Find<Node>("controller");
 
-	// Install NDN applications
+	//Name namePrefix = new Name("/controller");
+	//ndn::StrategyChoiceHelper::Install(consumer2,"/controller","/localhost/nfd/strategy/broadcast");
 
+	// Install NDN applications
 	std::string prfx_controller = "/controller";
 	std::string prfx_controller_node_consumer1 = "/Node1";
 	std::string prfx_controller_node_consumer2 = "/Node2";
@@ -136,12 +141,14 @@ int main(int argc, char *argv[]) {
 
 	Simulator::Stop(Seconds(500.0));
 
+	//Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLink, consumer, consumer2);
 	//Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLink, consumer2, consumer3);
 	//Simulator::Schedule(Seconds(18.0), ndn::LinkControlHelper::FailLink, consumer3, consumer2);
 	//Simulator::Schedule(Seconds(50.0), ndn::LinkControlHelper::UpLink, consumer2, consumer3);
 	//Simulator::Schedule(Seconds(60.0), ndn::LinkControlHelper::FailLinkByName, "Node2", "Node3");
 
 	ndn::L3RateTracer::InstallAll("rate-trace.txt", Seconds(1.0));
+	ndn::L3RateTracer::Install(controlllerNode,"rate-trace-controller.txt",Seconds(1.0));
 	//ndn::AppDelayTracer::InstallAll("app-delays-trace.txt");
 	//ndn::CsTracer::InstallAll("cs-trace.txt", Seconds(1.0));
 
